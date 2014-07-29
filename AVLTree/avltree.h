@@ -354,7 +354,7 @@ AVLTree<E, K>& AVLTree<E, K>::remove(const K& key, E& eValue)
     std::stack<AVLNode<E> * > pathStack;
     char dType = 0;
 
-    // 1. find insert position
+    // 1. find remove position
     while(p)
     {
         // 1.1 push path into stack

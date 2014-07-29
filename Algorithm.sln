@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TournamentTree", "Tournamen
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AVLTree", "AVLTree\AVLTree.vcxproj", "{E0443550-15E8-463D-BA11-BDBA60E8C742}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RedBlackTree", "RedBlackTree\RedBlackTree.vcxproj", "{3F5D5D1C-A692-42F7-B369-78C6099362B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -85,6 +87,10 @@ Global
 		{E0443550-15E8-463D-BA11-BDBA60E8C742}.Debug|Win32.Build.0 = Debug|Win32
 		{E0443550-15E8-463D-BA11-BDBA60E8C742}.Release|Win32.ActiveCfg = Release|Win32
 		{E0443550-15E8-463D-BA11-BDBA60E8C742}.Release|Win32.Build.0 = Release|Win32
+		{3F5D5D1C-A692-42F7-B369-78C6099362B9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3F5D5D1C-A692-42F7-B369-78C6099362B9}.Debug|Win32.Build.0 = Debug|Win32
+		{3F5D5D1C-A692-42F7-B369-78C6099362B9}.Release|Win32.ActiveCfg = Release|Win32
+		{3F5D5D1C-A692-42F7-B369-78C6099362B9}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
