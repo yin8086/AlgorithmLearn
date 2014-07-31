@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AVLTree", "AVLTree\AVLTree.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RedBlackTree", "RedBlackTree\RedBlackTree.vcxproj", "{3F5D5D1C-A692-42F7-B369-78C6099362B9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Graph", "Graph\Graph.vcxproj", "{38A08938-7F2F-47AB-B997-C5EE6ABDE141}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -91,6 +93,10 @@ Global
 		{3F5D5D1C-A692-42F7-B369-78C6099362B9}.Debug|Win32.Build.0 = Debug|Win32
 		{3F5D5D1C-A692-42F7-B369-78C6099362B9}.Release|Win32.ActiveCfg = Release|Win32
 		{3F5D5D1C-A692-42F7-B369-78C6099362B9}.Release|Win32.Build.0 = Release|Win32
+		{38A08938-7F2F-47AB-B997-C5EE6ABDE141}.Debug|Win32.ActiveCfg = Debug|Win32
+		{38A08938-7F2F-47AB-B997-C5EE6ABDE141}.Debug|Win32.Build.0 = Debug|Win32
+		{38A08938-7F2F-47AB-B997-C5EE6ABDE141}.Release|Win32.ActiveCfg = Release|Win32
+		{38A08938-7F2F-47AB-B997-C5EE6ABDE141}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

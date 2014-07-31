@@ -2,9 +2,13 @@ template<class T>
 class Chain;
 
 template<class T>
+class ChainIterator;
+
+template<class T>
 class ChainNode
 {
     friend Chain<T>;
+    friend ChainIterator<T>;
 private:
     T m_data;
     ChainNode<T> *m_next;
@@ -14,6 +18,7 @@ private:
 template<class T>
 class Chain
 {
+    friend ChainIterator<T>;
 private:
     ChainNode<T> *m_head;
     int m_length;
@@ -30,6 +35,8 @@ public:
     int length() const { return m_length; }
     Chain<T>& insert(int k, const T& rhs);
     Chain<T>& remove(int k, T& rhs);
+    Chain<T>& remove(T& rhs);
+    int search(const T& x) const;
     Chain<T>& insertSort();
     Chain<T>& radixSort(int radix = 10);
     void output(std::ostream& out) const;
@@ -88,6 +95,47 @@ Chain<T>& Chain<T>::remove(int k, T& rhs)
         }
     }
     return *this;
+}
+
+template<class T>
+Chain<T>& Chain<T>::remove(T& rhs)
+{
+    ChainNode<T> *p = m_head->m_next, *pp = m_head;
+    while(p && p->m_data != rhs)
+    {
+        pp = p;
+        p = p->m_next;
+    }
+    if (!p)
+    {
+        throw BadInput();
+    }
+
+    rhs = p->m_data;
+    pp->m_next = p->m_next;
+
+    delete p;
+    return *this;
+}
+
+template<class T>
+int Chain<T>::search(const T& x) const
+{
+    ChainNode<T> *p = m_head->m_next;
+    int idx = 1;
+    while (p && p->m_data != x)
+    {
+        p = p->m_next;
+        idx ++;
+    }
+    if (!p)
+    {
+        return 0;
+    }
+    else
+    {
+        return idx;
+    }
 }
 
 
@@ -218,3 +266,41 @@ Chain<T>& Chain<T>::radixSort(int radix)
     } while (!allZero);
     return *this;
 }
+
+
+template<class T>
+class ChainIterator
+{
+private:
+    ChainNode<T> *m_location;
+public:
+    T* initialize(const Chain<T>& c)
+    {
+        m_location = c.m_head->m_next;
+        if (m_location)
+        {
+            return & m_location->m_data;
+        }
+        else
+            return nullptr;
+    }
+    T* next()
+    {
+        if (!m_location)
+        {
+            return 0;
+        }
+        else
+        {
+            m_location = m_location->m_next;
+            if (m_location)
+            {
+                return & m_location->m_data;
+            }
+            else
+            {
+                return nullptr;
+            }
+        }
+    }
+};
