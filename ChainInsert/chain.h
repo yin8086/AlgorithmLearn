@@ -115,6 +115,7 @@ Chain<T>& Chain<T>::remove(T& rhs)
     pp->m_next = p->m_next;
 
     delete p;
+    m_length --;
     return *this;
 }
 

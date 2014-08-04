@@ -1,3 +1,5 @@
+#ifndef YINEXCEPT
+#define YINEXCEPT
 #include<exception>
 
 // exception classes
@@ -39,3 +41,4 @@ public:
     }
 
 };
+#endif

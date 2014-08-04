@@ -67,6 +67,7 @@
     <ClInclude Include="graph.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\UnionFind\unionfind.cpp" />
     <ClCompile Include="testGraph.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
