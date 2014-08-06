@@ -37,6 +37,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DefectiveBoard", "Defective
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MergeSort", "MergeSort\MergeSort.vcxproj", "{03E975DF-EBC5-4067-B99E-6F19124B9E85}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuickSort", "QuickSort\QuickSort.vcxproj", "{D371A166-B01C-4676-BB1D-C444A927CE9F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuickSelection", "QuickSelection\QuickSelection.vcxproj", "{549E0381-96E4-47BC-8A9B-AD552A5B18C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -115,6 +119,14 @@ Global
 		{03E975DF-EBC5-4067-B99E-6F19124B9E85}.Debug|Win32.Build.0 = Debug|Win32
 		{03E975DF-EBC5-4067-B99E-6F19124B9E85}.Release|Win32.ActiveCfg = Release|Win32
 		{03E975DF-EBC5-4067-B99E-6F19124B9E85}.Release|Win32.Build.0 = Release|Win32
+		{D371A166-B01C-4676-BB1D-C444A927CE9F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D371A166-B01C-4676-BB1D-C444A927CE9F}.Debug|Win32.Build.0 = Debug|Win32
+		{D371A166-B01C-4676-BB1D-C444A927CE9F}.Release|Win32.ActiveCfg = Release|Win32
+		{D371A166-B01C-4676-BB1D-C444A927CE9F}.Release|Win32.Build.0 = Release|Win32
+		{549E0381-96E4-47BC-8A9B-AD552A5B18C8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{549E0381-96E4-47BC-8A9B-AD552A5B18C8}.Debug|Win32.Build.0 = Debug|Win32
+		{549E0381-96E4-47BC-8A9B-AD552A5B18C8}.Release|Win32.ActiveCfg = Release|Win32
+		{549E0381-96E4-47BC-8A9B-AD552A5B18C8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
