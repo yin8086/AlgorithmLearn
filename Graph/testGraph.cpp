@@ -4,6 +4,7 @@
 #include <functional>
 #include <random>
 #include <ctime>
+#include "../Base/baseutil.h"
 #include "../Heap/yinexception.h"
 #include "../ChainInsert/chain.h"
 #include "../UnionFind/unionfind.h"
@@ -16,6 +17,7 @@ int main()
     //Yincpp::TopologicalSortTest();
     //Yincpp::BipartieCoverTest();
     //Yincpp::shortedPathTest();
-    Yincpp::minSpanningTreeTest();
+    //Yincpp::minSpanningTreeTest();
+    Yincpp::allPairsShortestPairTest();
     std::cin.get();
 }

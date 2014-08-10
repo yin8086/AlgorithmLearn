@@ -364,27 +364,6 @@ namespace Yincpp
         return k == n_v-1;
     }
 
-    template<class T>
-    void make2DArray(T ** &x, int rows, int cols)
-    {
-        x = new T* [rows];
-        for (int i=0; i<rows; ++i)
-        {
-            x[i] = new T [cols];
-        }
-    }
-
-    template<class T>
-    void delete2DArray(T ** & x, int rows)
-    {
-        for (int i=0; i<rows; ++i)
-        {
-            delete [] x[i];
-        }
-
-        delete [] x;
-        x = 0;
-    }
 
     // Matrix hierarchy
     template<class T>
@@ -416,6 +395,7 @@ namespace Yincpp
         MatrixWDigraph<T>& removeEdge(int vi, int vj);
 
         void shortestPath(int s, T d[], int p[]);
+        void allPairsShortestPath(T **c, int **kay);
     };
 
     template<class T>
@@ -628,6 +608,41 @@ namespace Yincpp
 
     }
 
+
+    template<class T>
+    void MatrixWDigraph<T>::allPairsShortestPath(T **c, int **kay)
+    {
+        for (int i=1; i<=m_numVert; ++i)
+        {
+            for (int j=1; j<=m_numVert; ++j)
+            {
+                c[i][j] = m_a[i][j];
+                kay[i][j] = 0;
+            }
+        }
+        for (int i=1; i<=m_numVert; ++i) c[i][i] = 0;
+
+        for (int k=1; k<=m_numVert; ++k)
+        {
+            for (int i=1; i<=m_numVert; ++i)
+            {
+                for (int j=1; j<=m_numVert; ++j)
+                {
+                    T dist1 = c[i][j];
+                    T distHi = c[i][k];
+                    T distLo = c[k][j];
+
+                    if (distHi != m_NoEdge && distLo != m_NoEdge &&
+                        (dist1 == m_NoEdge || distHi+distLo < dist1) )
+                    {
+                        c[i][j] = distHi+distLo;
+                        kay[i][j] = k;
+                    }
+                }
+            }
+        }
+
+    }
 
 
     template<class T>
@@ -1172,6 +1187,69 @@ namespace Yincpp
         }
 
     }
+
+    template<class T>
+    void OutputPath(T **c, int **kay, T NoEdge, int i, int j)
+    {
+        if (c[i][j] == NoEdge)
+        {
+            std::cout<<"No path from "<<i<<" to"<<j<<std::endl;
+            return;
+        }
+        else
+        {
+            std::cout<<"The path is: "<<i;
+            outputPath(kay, i, j);
+            std::cout<<std::endl;
+        }
+    }
+
+    void  outputPath(int **kay, int i, int j)
+    {
+        if (i == j)
+        {
+            return;
+        }
+        else if (kay[i][j] == 0) // @ destination
+        {
+            std::cout<<"->"<<j;
+        }
+        else
+        {
+            outputPath(kay, i, kay[i][j]);
+            outputPath(kay, kay[i][j], j);
+        }
+    }
+
+    void allPairsShortestPairTest()
+    {
+        const int VERLEN = 10;
+
+        MatrixWDigraph<int> md(VERLEN, 99);
+
+        md.addEdge(1, 2, 2).addEdge(1, 4, 20);
+        md.addEdge(2, 5, 1);
+        md.addEdge(3, 1, 3);
+        md.addEdge(4, 3, 8).addEdge(4, 6, 6).addEdge(4, 7, 4);
+        md.addEdge(5, 3, 7).addEdge(5, 8, 3);
+        md.addEdge(6, 3, 1);
+        md.addEdge(7, 8, 1);
+        md.addEdge(8, 6, 2).addEdge(8, 10, 2);
+        md.addEdge(9, 7, 2);
+        md.addEdge(10, 9, 1);
+
+        int **c;
+        int **kay;
+        Yincpp::make2DArray(c, VERLEN+1, VERLEN+1);
+        Yincpp::make2DArray(kay, VERLEN+1, VERLEN+1);
+        md.allPairsShortestPath(c, kay);
+        int startI = 1, endI = 10;
+        OutputPath(c, kay, 99, startI, endI);
+        std::cout<<"Length:"<<c[startI][endI]<<std::endl;
+        Yincpp::delete2DArray(c, VERLEN+1);
+        Yincpp::delete2DArray(kay, VERLEN+1);
+    }
+
 
     void minSpanningTreeTest()
     {
