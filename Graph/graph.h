@@ -376,9 +376,21 @@ namespace Yincpp
         int m_numVert;
         int m_numEdge;
         int *m_iterPos;
+
+
+        // for traveling salesperson problem
+        static int *x;
+        static T bestc;
+        static int *bestx;
+        static T cc;
+        static int n;
+
     public:
         MatrixWDigraph(int vert = 10, T noEdge = 0);
-        ~MatrixWDigraph() { delete2DArray(m_a, m_numVert);}
+        ~MatrixWDigraph() 
+        { 
+            delete2DArray(m_a, m_numVert);
+        }
         bool exist(int i, int j) const;
         int outDegree(int vi) const;
         int inDegree(int vi) const;
@@ -396,6 +408,13 @@ namespace Yincpp
 
         void shortestPath(int s, T d[], int p[]);
         void allPairsShortestPath(T **c, int **kay);
+
+        
+        T TSP(int rn, int v[]);
+        void tsp(int i);
+
+        T BBTSP(int rn, int v[]);
+
     };
 
     template<class T>
@@ -644,6 +663,207 @@ namespace Yincpp
 
     }
 
+    template<class T>
+    int *MatrixWDigraph<T>::x;
+
+    template<class T>
+    T MatrixWDigraph<T>::bestc;
+
+    template<class T>
+    int * MatrixWDigraph<T>::bestx;
+
+    template<class T>
+    T MatrixWDigraph<T>::cc;
+    
+    template<class T>
+    int MatrixWDigraph<T>::n;
+
+    template<class T>
+    T MatrixWDigraph<T>::TSP(int rn, int v[])
+    {
+        n = rn;
+        x = new int[n+1];
+        for (int i=1; i<=n; ++i) // start increasing permution
+        {
+            x[i] = i;
+        }
+        bestc = m_NoEdge;
+        bestx = v;
+        cc = 0;
+
+        tsp(2);
+        delete [] x;
+        return bestc;
+    }
+
+    template<class T>
+    void MatrixWDigraph<T>::tsp(int i)
+    {
+        if (i < n)
+        {
+            // every level need to see all the permution
+            for (int j=i; j<=n; ++j)
+            {
+                // try i,j, left elements permution
+                if (m_a[x[i-1]][x[j]] != m_NoEdge &&
+                    (bestc == m_NoEdge || cc + m_a[x[i-1]][x[j]] < bestc) )
+                {
+                    std::swap(x[i], x[j]);
+                    cc += m_a[x[i-1]][x[i]];
+                    tsp(i+1);
+                    cc -= m_a[x[i-1]][x[i]];
+                    std::swap(x[i], x[j]);
+                }
+            }
+
+        }
+        else
+        {
+            if ( m_a[x[n-1]][x[n]] != m_NoEdge && m_a[x[n]][1] != m_NoEdge &&
+                (bestc == m_NoEdge || 
+                  cc+m_a[x[n-1]][x[n]]+m_a[x[n]][1] < bestc) )
+            {
+                bestc = cc+m_a[x[n-1]][x[n]]+m_a[x[n]][1];
+                
+                for (int j=1; j<=n; ++j)
+                {
+                    bestx[j] = x[j];
+                }
+                
+            }
+        }
+    }
+
+    template<class T>
+    class MinHeapNode
+    {
+        friend class MatrixWDigraph<T>;
+
+        int *x;
+        int s;
+        T   cc;
+        T   lcost;
+        T   rcost;
+    public:
+        bool operator > (const MinHeapNode<T> &rhs)
+        {
+            return lcost > rhs.lcost;
+        }
+    };
+
+    template<class T>
+    T MatrixWDigraph<T>::BBTSP(int rn, int v[])
+    {
+        n = rn;
+        MinHeap<MinHeapNode<T>> mh(1000);
+        T MinSum = 0;
+        T *MinOut = new T[n+1];
+        
+        // calculate the minimum out degree of all the vertices
+        for(int i=1; i<=n; ++i)
+        {
+            T Min = m_NoEdge;
+            for (int j=1; j<=n; ++j)
+            {
+                if (m_a[i][j] != m_NoEdge &&
+                    (m_a[i][j] < Min || m_a[i][j] == m_NoEdge) )
+                {
+                    Min = m_a[i][j];
+                }
+            }
+
+            if (Min == m_NoEdge)
+            {
+                return m_NoEdge;
+            }
+
+            MinOut[i] = Min;
+            MinSum += Min;
+        }
+
+        MinHeapNode<T> E;
+        E.x = new int [n];  
+        for (int i=0; i<n; ++i)
+        {
+            E.x[i] = i+1;
+        }
+        E.cc = E.s = 0;
+        E.rcost = MinSum;
+        bestc = m_NoEdge;
+
+        while (E.s < n-1)
+        {
+            if (E.s == n-2)
+            {
+                if (m_a[E.x[n-2]][E.x[n-1]] != m_NoEdge &&
+                    m_a[E.x[n-1]][1] != m_NoEdge &&
+                    (bestc == m_NoEdge || 
+                    E.cc + m_a[E.x[n-2]][E.x[n-1]] + m_a[E.x[n-1]][1] < bestc) )
+                {
+                    bestc = E.cc + m_a[E.x[n-2]][E.x[n-1]] + m_a[E.x[n-1]][1];
+                    E.cc = bestc;
+                    E.lcost = bestc;
+                    E.s++;
+                    mh.insert(E);
+                }
+
+            }
+            else
+            {
+                for(int i = E.s+1; i < n; ++i)
+                {
+                    if (m_a[E.x[E.s]][E.x[i]] != m_NoEdge)
+                    {
+                        T cc = E.cc + m_a[E.x[E.s]][E.x[i]];
+                        T rcost = E.rcost - MinOut[E.x[E.s]];
+                        T b = cc + rcost; // bound
+
+                        if (b < bestc || bestc == m_NoEdge)
+                        {
+                            MinHeapNode<T> N;
+                            N.x = new int[n];
+                            for (int j=0; j<n; ++j)
+                            {
+                                N.x[j] = E.x[j];
+                            }
+                            // swap
+                            N.x[E.s+1] = E.x[i];
+                            N.x[i] = E.x[E.s+1];
+                            N.cc = cc;
+                            N.s = E.s + 1;
+                            N.lcost = b;
+                            N.rcost = rcost;
+                            mh.insert(N);
+                        }
+
+                    }
+                }
+                delete [] E.x;
+            }
+            try {mh.deleteMin(E);}
+            catch(OutOfBounds) {break;}
+        }
+
+        if (bestc == m_NoEdge)
+        {
+            return m_NoEdge;
+        }
+
+        for (int i=0; i<n; ++i)
+        {
+            v[i+1] = E.x[i];
+        }
+
+        while (true)
+        {
+            delete [] E.x;
+            try {mh.deleteMin(E);}
+            catch(OutOfBounds) {break;}
+        }
+        delete [] MinOut;
+
+        return bestc;
+    }
 
     template<class T>
     class MatrixWGraph : public MatrixWDigraph<T>, virtual public WNetwork<T>
@@ -1276,6 +1496,52 @@ namespace Yincpp
         }
         delete []  ent;
 
+    }
+
+    void TravellingSalesPersonTest()
+    {
+        int n = 4;
+        MatrixWDigraph<int> mdg(n);
+        mdg.addEdge(1, 2, 30).addEdge(2, 1, 30);
+        mdg.addEdge(1, 3, 6).addEdge(3, 1, 6);
+        mdg.addEdge(1, 4, 4).addEdge(4, 1, 4);
+
+        mdg.addEdge(2, 3, 5).addEdge(3, 2, 5);
+        mdg.addEdge(2, 4, 10).addEdge(4, 2, 10);
+
+        mdg.addEdge(3, 4, 20).addEdge(4, 3, 10);
+
+        int v[5];
+        int bestc = mdg.TSP(n, v);
+        std::cout<<"Best Solution Cost: "<<bestc<<std::endl;
+        for (int i=1; i<=n; ++i)
+        {
+            std::cout<<v[i]<<" ";
+        }
+        std::cout<<1<<std::endl;
+    }
+
+    void TravellingSalesPersonBBTest()
+    {
+        int n = 4;
+        MatrixWDigraph<int> mdg(n, 99);
+        mdg.addEdge(1, 2, 30).addEdge(2, 1, 30);
+        mdg.addEdge(1, 3, 6).addEdge(3, 1, 6);
+        mdg.addEdge(1, 4, 4).addEdge(4, 1, 4);
+
+        mdg.addEdge(2, 3, 5).addEdge(3, 2, 5);
+        mdg.addEdge(2, 4, 10).addEdge(4, 2, 10);
+
+        mdg.addEdge(3, 4, 20).addEdge(4, 3, 10);
+
+        int v[5];
+        int bestc = mdg.BBTSP(n, v);
+        std::cout<<"Best Solution Cost: "<<bestc<<std::endl;
+        for (int i=1; i<=n; ++i)
+        {
+            std::cout<<v[i]<<" ";
+        }
+        std::cout<<1<<std::endl;
     }
 }
 

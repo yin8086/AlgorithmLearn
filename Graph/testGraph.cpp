@@ -3,6 +3,7 @@
 #include <iostream>
 #include <functional>
 #include <random>
+#include <list>
 #include <ctime>
 #include "../Base/baseutil.h"
 #include "../Heap/yinexception.h"
@@ -18,6 +19,8 @@ int main()
     //Yincpp::BipartieCoverTest();
     //Yincpp::shortedPathTest();
     //Yincpp::minSpanningTreeTest();
-    Yincpp::allPairsShortestPairTest();
+    //Yincpp::allPairsShortestPairTest();
+    Yincpp::TravellingSalesPersonTest();
+    Yincpp::TravellingSalesPersonBBTest();
     std::cin.get();
 }

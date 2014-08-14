@@ -161,6 +161,307 @@ namespace Yincpp
 
     }
 
+    template<class Tw, class Tp>
+    class Knap;
+
+
+    class bbnode
+    {
+        template<class Tw, class Tp>
+        friend class Knap;
+
+        bbnode *m_parent;
+        bool isLeft;
+    };
+
+    template<class Tw, class Tp>
+    class HeapNode
+    {
+        friend class Knap<Tw, Tp>;
+
+        bbnode *m_ptr;  // corresponding bbnode
+        Tp m_uprofit;    // upper bound profit
+        Tp m_profit;
+        Tw m_weight;
+        int m_level; // node dequeue randomly, so must save level
+
+    public:
+        bool operator < (const HeapNode<Tw, Tp> &rhs)
+        {
+            return m_uprofit < rhs.m_uprofit;
+        }
+    };
+
+
+    template<class Tw, class Tp>
+    Tp Knapsack(Tp p[], Tw w[], Tw c, int n, int x[]);
+
+    template<class Tw, class Tp>
+    Tp KnapsackBB(Tp p[], Tw w[], Tw c, int n, int x[]);
+
+    template<class Tw, class Tp>
+    class Knap
+    {
+        friend Tp Knapsack<Tw, Tp>(Tp p[], Tw w[], Tw c, int n, int x[]);
+        friend Tp KnapsackBB<Tw, Tp>(Tp p[], Tw w[], Tw c, int n, int x[]);
+    private:
+        void Knapsack(int i);
+        Tp Bound(int i);
+
+        Tp MaxProfitKnapsack();
+        void addLiveNode(MaxHeap<HeapNode<Tw, Tp> > &H, bbnode *E, Tp up, Tp cp, Tw cw, bool ch, int level);
+        Tw c; // capacity
+        int n;
+        Tw *w;
+        Tp *p;
+        Tw cw;
+        Tp cp;
+        int *x, *bestx;
+        Tp bestp;
+        std::list<bbnode *> m_bag;
+    public:
+        ~Knap()
+        {
+            for (std::list<bbnode *>::iterator p = m_bag.begin(); p != m_bag.end(); p++)
+            {
+                delete *p;
+            }
+        }
+    };
+
+    template<class Tw, class Tp>
+    Tp Knap<Tw, Tp>::Bound(int i)
+    {
+        Tw cleft = c - cw; // all the weight available left
+        Tw ap = cp;
+
+        // go to left
+        while (i <= n && w[i] <= cleft)
+        {
+            cleft -= w[i];
+            ap += p[i];
+            i++;
+        }
+
+        if (i <= n)
+        {
+            ap += cleft/w[i] * p[i];
+        }
+
+        return ap;
+    }
+
+    template<class Tw, class Tp>
+    void Knap<Tw, Tp>::Knapsack(int i)
+    {
+        // i level or ith
+
+        if (1 <= i && i <= n)
+        {
+            if (cw + w[i] <= c) // left tree, x[i] = 1
+            {
+                x[i] = 1;
+                cw += w[i];
+                cp += p[i];
+                Knapsack(i+1);
+                cw -= w[i];
+                cp -= p[i];
+            }
+
+            if (Bound(i+1) > bestp) // if use all the weights left. then right tree
+            {
+                x[i] = 0;
+                Knapsack(i+1);
+            }
+
+            bestx[i] = x[i];
+        }
+        else
+        {
+            /*
+            for (int j=1; j<=n; ++j)
+            {
+                bestx[j] = x[j];
+            }
+            */
+            bestp = cp;
+        }
+        // new method for bestx
+        //bestx[i-1] = x[i-1];
+    }
+
+    class KSObject
+    {
+        friend int Knapsack<int, int>(int p[], int w[], int c, int n, int x[]);
+        friend int KnapsackBB<int, int>(int p[], int w[], int c, int n, int x[]);
+    public:
+        bool operator <=(const KSObject &rhs) const{ return d >= rhs.d;}
+    private:
+        int ID;
+        double d;
+    };
+
+    template<class Tw, class Tp>
+    Tp Knapsack(Tp p[], Tw w[], Tw c, int n, int x[])
+    {
+        Tw W = 0;
+        Tp P = 0;
+
+        KSObject *KQ = new KSObject[n];
+        for (int i=1; i<=n; ++i)
+        {
+            KQ[i-1].ID = i;
+            KQ[i-1].d = 1.0*p[i]/w[i];
+            P += p[i];
+            W += w[i];
+        }
+        if (W <= c)
+        {
+            return P;
+        }
+
+        MergeSort(KQ, n);
+
+        Knap<Tw, Tp> K;
+        K.p = new Tp[n+1];
+        K.w = new Tw[n+1];
+        for (int i=1; i<=n; ++i)
+        {
+            K.p[i] = p[KQ[i-1].ID];
+            K.w[i] = w[KQ[i-1].ID];
+        }
+        K.cp = K.cw = 0;
+        K.c = c;
+        K.n = n;
+        K.x = new int[n+1];
+        K.bestx = new int[n+1];
+        K.bestp = 0;
+
+        K.Knapsack(1);
+        for (int i=1; i<=n; ++i)
+        {
+            x[KQ[i-1].ID] = K.bestx[i];
+        }
+        delete [] KQ;
+        delete [] K.p;
+        delete [] K.w;
+        delete [] K.x;
+        delete [] K.bestx;
+
+        return K.bestp;
+        
+
+    }
+    
+    template<class Tw, class Tp>
+    void Knap<Tw, Tp>::addLiveNode(MaxHeap<HeapNode<Tw, Tp> > &H, bbnode *E, Tp up, Tp cp, Tw cw, bool ch, int level)
+    {
+        bbnode *pb = new bbnode;
+        pb->isLeft = ch;
+        pb->m_parent = E;
+        m_bag.push_back(pb);
+
+        HeapNode<Tw, Tp> hn;
+        hn.m_level = level;
+        hn.m_ptr = pb;
+        hn.m_weight = cw;
+        hn.m_profit = cp;
+        hn.m_uprofit = up;
+        H.insert(hn);
+    }
+
+    template<class Tw, class Tp>
+    Tp Knap<Tw, Tp>::MaxProfitKnapsack()
+    {
+        MaxHeap<HeapNode<Tw, Tp> > mh(1000);
+        int level = 1;
+        bbnode *E = nullptr;
+        Tp up = Bound(1);
+
+        while (level != n+1)
+        {
+            if (cw + w[level] <= c)
+            {
+                if (cp + p[level] > bestp)
+                {
+                    bestp = cp + p[level];
+                }
+                addLiveNode(mh, E, up, cp + p[level], cw + w[level], true, level+1);
+            }
+            up = Bound(level+1);
+            if (up >= bestp)   // why >= ?
+            {
+                addLiveNode(mh, E, up, cp, cw, false, level+1);
+            }
+
+            HeapNode<Tw, Tp> hn;
+            mh.deleteMax(hn);
+            E = hn.m_ptr;
+            cw = hn.m_weight;
+            cp = hn.m_profit;
+            up = hn.m_uprofit;
+            level= hn.m_level;
+        }
+
+        for (int i=n; i>0; --i)
+        {
+            bestx[i] = E->isLeft ? 1 : 0;
+            E = E->m_parent;
+        }
+
+        return cp;
+    }
+
+    template<class Tw, class Tp>
+    Tp KnapsackBB(Tp p[], Tw w[], Tw c, int n, int x[])
+    {
+        Tw W = 0;
+        Tp P = 0;
+
+        KSObject *KQ = new KSObject[n];
+        for (int i=1; i<=n; ++i)
+        {
+            KQ[i-1].ID = i;
+            KQ[i-1].d = 1.0*p[i]/w[i];
+            P += p[i];
+            W += w[i];
+        }
+        if (W <= c)
+        {
+            return P;
+        }
+
+        MergeSort(KQ, n);
+
+        Knap<Tw, Tp> K;
+        K.p = new Tp[n+1];
+        K.w = new Tw[n+1];
+        for (int i=1; i<=n; ++i)
+        {
+            K.p[i] = p[KQ[i-1].ID];
+            K.w[i] = w[KQ[i-1].ID];
+        }
+        K.cp = K.cw = 0;
+        K.c = c;
+        K.n = n;
+        K.bestx = new int [n+1];
+        K.bestp = 0;
+
+        K.bestp = K.MaxProfitKnapsack();
+
+        for (int i=1; i<=n; ++i)
+        {
+            x[KQ[i-1].ID] = K.bestx[i];
+        }
+        delete [] KQ;
+        delete [] K.p;
+        delete [] K.w;
+        delete [] K.bestx;
+        
+        return K.bestp;
+    }
+
+
     void Knapsack0_1Test()
     {
         /*  Test Case 1
@@ -246,5 +547,71 @@ namespace Yincpp
         
     }
 
+    void KnapsackBTTest()
+    {
+        // Test case 16.7
+        /*int w[] = {0, 3, 5, 2, 1};
+        int p[] = {0, 9, 10, 7, 4};
+        int n=4;
+        int c = 7;
+        int bestX[5];*/
+
+        // Test case 2
+        /*
+        int n = 4;
+        int p[] = {0, 6, 10, 12, 13};
+        int w[] = {0, 2, 4, 6, 7};
+        int c = 11;
+        int bestX[5];*/
+        
+
+
+        // Test case 3
+        int n = 5;
+        int p[] = {0, 6, 3, 5, 4, 6};
+        int w[] = {0, 2, 2, 6, 5, 4};
+        int c = 10;
+        int bestX[6];
+
+        int bestP = Knapsack(p, w, c, n, bestX);
+        std::cout<<"Best Solution Profit: "<<bestP<<std::endl;
+        for (int i=1; i<=n; ++i)
+        {
+            std::cout<<bestX[i]<<(i==n?"\n":" ");
+        }
+    }
+
+    void KnapsackBBTest()
+    {
+        // Test case 16.7
+        /*int w[] = {0, 3, 5, 2, 1};
+        int p[] = {0, 9, 10, 7, 4};
+        int n=4;
+        int c = 7;
+        int bestX[5];*/
+
+        // Test case 2
+        /*
+        int n = 4;
+        int p[] = {0, 6, 10, 12, 13};
+        int w[] = {0, 2, 4, 6, 7};
+        int c = 11;
+        int bestX[5];
+        */
+
+
+        // Test case 3
+        int n = 5;
+        int p[] = {0, 6, 3, 5, 4, 6};
+        int w[] = {0, 2, 2, 6, 5, 4};
+        int c = 10;
+        int bestX[6];
+        int bestP = KnapsackBB(p, w, c, n, bestX);
+        std::cout<<"Best Solution Profit: "<<bestP<<std::endl;
+        for (int i=1; i<=n; ++i)
+        {
+            std::cout<<bestX[i]<<(i==n?"\n":" ");
+        }
+    }
 
 }
