@@ -216,34 +216,55 @@ namespace Yincpp
 
     }
 
-    void quickSortTest()
+    template<class T>
+    void quick3Sort(T a[], int left, int right)
     {
-        int numE = 234;
-        std::default_random_engine newEngine(static_cast<int>(std::time(0)));
-        std::uniform_int_distribution<int> uidn(0, numE * 4);
-
-        int *testArray = new int[numE];
-        std::cout<<"====Unsorted====="<<std::endl;
-
-        for (int i=0; i<numE; i++)
+        if (left >= right)
         {
-            testArray[i] = uidn(newEngine);
-            std::cout<<testArray[i]<<" ";
+            return;
         }
-        std::cout<<std::endl;
+        // pL point to next left-most position
+        // pR point to next right-most position
+        // p  point to the current move position
+        int pL = left, p = left+1, pR = right;
+        T pivot = a[left];
 
-        //QuickSort(testArray, numE);
-        QuickSortStack(testArray, numE);
-
-        std::cout<<"====sorted====="<<std::endl;
-        for (int i=0; i<numE; i++)
+        while (p <= pR)
         {
-            std::cout<<testArray[i]<<" ";
+            int cmp = a[p] - pivot;
+            if (cmp < 0)
+            {
+                // swap smaller to left-most
+                // swap pivot to middle
+                // p must go ahead because old p point to pivot
+                std::swap(a[pL++], a[p++]);  
+            }
+            else if (cmp > 0)
+            {
+                // swap bigger to right-most
+                // wait to process the element in original right-most pos
+                std::swap(a[p], a[pR--]);  
+            }
+            else
+            {
+                // pass a pivot
+                p++;
+            }
         }
-        std::cout<<std::endl;
-
-        delete [] testArray;
+        // a[left...pL-1] < pivot = a[pL...pR] < a[pR+1...right]
+        quick3Sort(a, left, pL-1);
+        quick3Sort(a, pR+1, right);
     }
+
+
+    // type T must support for operator -
+    template<class T>
+    void Quick3Sort(T a[], int n)
+    {
+        quick3Sort(a, 0, n-1);
+    }
+
+    
 
 
 }
