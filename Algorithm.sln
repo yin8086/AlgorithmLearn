@@ -49,6 +49,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MatrixChain", "MatrixChain\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ContainerLoadingBackTrack", "ContainerLoadingBackTrack\ContainerLoadingBackTrack.vcxproj", "{D400720D-F3FE-4C9E-919A-D6AC939E7916}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StringSort", "StringSort\StringSort.vcxproj", "{28B3AB08-FACB-420D-A5F5-B5EF1BB64ACF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -151,6 +153,10 @@ Global
 		{D400720D-F3FE-4C9E-919A-D6AC939E7916}.Debug|Win32.Build.0 = Debug|Win32
 		{D400720D-F3FE-4C9E-919A-D6AC939E7916}.Release|Win32.ActiveCfg = Release|Win32
 		{D400720D-F3FE-4C9E-919A-D6AC939E7916}.Release|Win32.Build.0 = Release|Win32
+		{28B3AB08-FACB-420D-A5F5-B5EF1BB64ACF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{28B3AB08-FACB-420D-A5F5-B5EF1BB64ACF}.Debug|Win32.Build.0 = Debug|Win32
+		{28B3AB08-FACB-420D-A5F5-B5EF1BB64ACF}.Release|Win32.ActiveCfg = Release|Win32
+		{28B3AB08-FACB-420D-A5F5-B5EF1BB64ACF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
