@@ -4,26 +4,9 @@
 #include <cstdint>
 #include <random>
 #include <algorithm>
+#include "../Base/baseutil.h"
 #include "strSort.h"
 
-std::string random_Str(std::default_random_engine &eng, std::uniform_int_distribution<> &uid)
-{
-    int strSize = uid(eng);
-    std::string strR(strSize, 0);
-    std::generate_n(strR.begin(), strSize, 
-        [&eng]() 
-        {
-                const char charset[] =
-                    /*"0123456789"
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"*/
-                    "abcdefghijklmnopqrstuvwxyz";
-                // delete \0
-                std::uniform_int_distribution<> uid(0, sizeof(charset)-2);
-                return charset[ uid(eng) ];
-
-         });
-    return strR;
-}
 
 
 void testSortString()
@@ -34,7 +17,7 @@ void testSortString()
     std::uniform_int_distribution<> uid(1, 8);
     for (int i=0; i<numE; ++i)
     {
-        strArray[i] = random_Str(eng, uid);
+        strArray[i] = Yincpp::random_Str(eng, uid);
         std::cout<<strArray[i]<<(i==numE-1?"\n":" ");
     }
 

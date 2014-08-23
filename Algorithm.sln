@@ -51,6 +51,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ContainerLoadingBackTrack",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StringSort", "StringSort\StringSort.vcxproj", "{28B3AB08-FACB-420D-A5F5-B5EF1BB64ACF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StringSearch", "StringSearch\StringSearch.vcxproj", "{46329A0D-80FA-4656-8465-6C75CAE8F169}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PatternMatch", "PatternMatch\PatternMatch.vcxproj", "{A5FCFCE5-41ED-43C7-8155-EB94A8B5B23D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -157,6 +161,14 @@ Global
 		{28B3AB08-FACB-420D-A5F5-B5EF1BB64ACF}.Debug|Win32.Build.0 = Debug|Win32
 		{28B3AB08-FACB-420D-A5F5-B5EF1BB64ACF}.Release|Win32.ActiveCfg = Release|Win32
 		{28B3AB08-FACB-420D-A5F5-B5EF1BB64ACF}.Release|Win32.Build.0 = Release|Win32
+		{46329A0D-80FA-4656-8465-6C75CAE8F169}.Debug|Win32.ActiveCfg = Debug|Win32
+		{46329A0D-80FA-4656-8465-6C75CAE8F169}.Debug|Win32.Build.0 = Debug|Win32
+		{46329A0D-80FA-4656-8465-6C75CAE8F169}.Release|Win32.ActiveCfg = Release|Win32
+		{46329A0D-80FA-4656-8465-6C75CAE8F169}.Release|Win32.Build.0 = Release|Win32
+		{A5FCFCE5-41ED-43C7-8155-EB94A8B5B23D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A5FCFCE5-41ED-43C7-8155-EB94A8B5B23D}.Debug|Win32.Build.0 = Debug|Win32
+		{A5FCFCE5-41ED-43C7-8155-EB94A8B5B23D}.Release|Win32.ActiveCfg = Release|Win32
+		{A5FCFCE5-41ED-43C7-8155-EB94A8B5B23D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
