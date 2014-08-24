@@ -153,6 +153,7 @@ namespace Yincpp
                 }
             }
             // all empty return nullptr
+            delete x;
             return nullptr;
         }
     }
