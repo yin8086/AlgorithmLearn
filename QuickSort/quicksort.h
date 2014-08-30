@@ -219,10 +219,22 @@ namespace Yincpp
     template<class T>
     void quick3Sort(T a[], int left, int right)
     {
+        // a. small sequence use quick sort
+        /*
         if (left >= right)
         {
             return;
         }
+        */
+
+        // b. use insertion sort instead of quick sort
+        //    when size <= nbreak
+        if ( right + 1 - left <= QUICK_N_BREAK)
+        {
+            insertSort(a, left, right);
+            return;
+        }
+
         // pL point to next left-most position
         // pR point to next right-most position
         // p  point to the current move position
@@ -241,9 +253,20 @@ namespace Yincpp
             }
             else if (cmp > 0)
             {
+                /// old method
                 // swap bigger to right-most
                 // wait to process the element in original right-most pos
-                std::swap(a[p], a[pR--]);  
+                /*std::swap(a[p], a[pR--]);  */
+                /// old method
+
+                /// new method
+                while (a[pR] - pivot > 0)
+                    pR--;
+                if (p < pR)
+                {
+                    std::swap(a[p], a[pR--]);
+                }
+                /// new method
             }
             else
             {

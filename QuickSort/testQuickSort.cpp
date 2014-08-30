@@ -21,8 +21,8 @@ void quickSortTest()
 
     //Yincpp::QuickSort(testArray, numE);
     //Yincpp::QuickSortStack(testArray, numE);
-    //Yincpp::Quick3Sort(testArray, numE);
-    Yincpp::QuickSortOneWay(testArray, numE);
+    Yincpp::Quick3Sort(testArray, numE);
+    //Yincpp::QuickSortOneWay(testArray, numE);
 
     std::cout<<"====sorted====="<<std::endl;
     for (int i=0; i<numE; i++)
