@@ -7,7 +7,7 @@
 int main()
 {
     Chain<int> ci;
-    int numTest = 10;
+    int numTest = 32;
 
     std::default_random_engine engine(static_cast<int>(time(0)));
     std::uniform_int_distribution<int> uid(0, numTest*2);
@@ -20,7 +20,8 @@ int main()
     std::cout<<"====Unsort===="<<std::endl;
     ci.output(std::cout);
     //ci.insertSort();
-    ci.radixSort(10);
+    //ci.radixSort(10);
+    ci.quickSort();
     std::cout<<std::endl;
     std::cout<<"====Sorted===="<<std::endl;
     ci.output(std::cout);

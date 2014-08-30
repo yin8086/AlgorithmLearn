@@ -159,7 +159,6 @@ void BinaryTree<T>::postOrder(std::function<void(BinaryTreeNode<T> *)> visit)
 {
     if(!m_root) return;
     std::stack<std::pair<BinaryTreeNode<T> *, int> > nodeStack;
-
     std::pair<BinaryTreeNode<T> *, int> nodePair;
     nodeStack.push(std::make_pair(m_root, 0)); // ready for first visit
     while(!nodeStack.empty())

@@ -23,7 +23,8 @@ private:
     ChainNode<T> *m_head;
     int m_length;
     bool binSort(int range, std::function< int(int) > func);
-    
+    void quickSort(ChainNode<T> *pBeg, ChainNode<T> *pEnd);
+
 public:
     Chain():m_length(0)
     {
@@ -39,6 +40,8 @@ public:
     int search(const T& x) const;
     Chain<T>& insertSort();
     Chain<T>& radixSort(int radix = 10);
+
+    Chain<T>& quickSort();
     void output(std::ostream& out) const;
 };
 
@@ -268,6 +271,47 @@ Chain<T>& Chain<T>::radixSort(int radix)
     return *this;
 }
 
+//@param pStart points to the start element node
+//@param pEnd points to the pass one node to the last end
+template<class T>
+void Chain<T>::quickSort(ChainNode<T> *pBeg, ChainNode<T> *pEnd)
+{
+    if (pBeg == pEnd)
+    {
+        return;
+    }
+
+    ChainNode<T> *pI = pBeg, *pJ = pBeg->m_next;
+    T pivot = pBeg->m_data;
+
+    do
+    {
+        while (pJ != pEnd && pJ->m_data > pivot)
+        {
+            pJ = pJ->m_next;
+        }
+
+        if (pJ != pEnd)
+        {
+            pI = pI->m_next;
+            std::swap(pI->m_data, pJ->m_data);
+            pJ = pJ->m_next;
+        }
+    }while (pJ != pEnd);
+
+    pBeg->m_data = pI->m_data;
+    pI->m_data = pivot;
+
+    quickSort(pBeg, pI);
+    quickSort(pI->m_next, pEnd);
+}
+
+template<class T>
+Chain<T>& Chain<T>::quickSort()
+{
+    quickSort(m_head->m_next, nullptr);
+    return *this;
+}
 
 template<class T>
 class ChainIterator

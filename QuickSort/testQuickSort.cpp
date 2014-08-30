@@ -5,7 +5,7 @@
 
 void quickSortTest()
 {
-    int numE = 2345;
+    int numE = 123;
     std::default_random_engine newEngine(static_cast<int>(std::time(0)));
     std::uniform_int_distribution<int> uidn(0, numE * 4);
 
@@ -21,7 +21,8 @@ void quickSortTest()
 
     //Yincpp::QuickSort(testArray, numE);
     //Yincpp::QuickSortStack(testArray, numE);
-    Yincpp::Quick3Sort(testArray, numE);
+    //Yincpp::Quick3Sort(testArray, numE);
+    Yincpp::QuickSortOneWay(testArray, numE);
 
     std::cout<<"====sorted====="<<std::endl;
     for (int i=0; i<numE; i++)

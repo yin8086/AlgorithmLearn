@@ -264,7 +264,41 @@ namespace Yincpp
         quick3Sort(a, 0, n-1);
     }
 
-    
+    template<class T>
+    void quickSortOneWay(T a[], int left, int right)
+    {
+        if (left >= right)
+        {
+            return;
+        }
+
+        int pI = left, pJ = left + 1;
+        T pivot = a[left];
+
+        while (pJ <= right)
+        {
+            while (pJ <= right && a[pJ] > pivot)
+                pJ ++;
+
+            if (pJ <= right)
+            {
+                std::swap(a[++pI], a[pJ++]);
+            }
+
+        }
+
+        a[left] = a[pI];
+        a[pI] = pivot;
+        quickSortOneWay(a, left, pI-1);
+        quickSortOneWay(a, pI+1, right);
+    }
+
+    template<class T>
+    void QuickSortOneWay(T a[], int n)
+    {
+        quickSortOneWay(a, 0, n-1);
+    }
+
 
 
 }
