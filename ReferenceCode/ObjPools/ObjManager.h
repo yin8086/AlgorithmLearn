@@ -3,6 +3,9 @@
 // post-url: http://www.cguage.com/2013/08/obj-pool.html
 // dsc:      对象工厂类，使用宏和预加载提高效率
 
+// main idea: 将对象的构造与具体的构造析构函数解耦，利用类名
+//          : 实现多态产生不同子类对象
+
 #pragma once
 #include <string>
 #include <map>
