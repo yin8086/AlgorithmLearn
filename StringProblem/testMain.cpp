@@ -25,14 +25,19 @@ void testStr()
 
 void testNumOfDigit()
 {
-    long long endNum = 100;
-    int digit = 9;
+    long long endNum = 657890;
+    int digit = 1;
+    
     std::pair<long long, long long> rs = Yincpp::numberOfDigit(endNum, digit);
     std::cout<<"1~"<<endNum<<" have ["<<rs.second<<"] "<<digit<<"s. Max I: "<<rs.first<<std::endl;
+    
+    long long nod = Yincpp::numberOfDigitRecur(endNum, digit);
+    std::cout << "1~" << endNum << " have [" << nod << "] " << digit << "s." << std::endl;
 }
 int main()
 {
-    testStr();
+    //testStr();
+    testNumOfDigit();
     system("pause");
 }
 

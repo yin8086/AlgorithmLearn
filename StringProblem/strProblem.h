@@ -1,3 +1,4 @@
+#include <cmath>
 namespace Yincpp
 {
     std::pair<int, std::string> longestConsecutiveSubString(const std::string &str)
@@ -124,4 +125,64 @@ namespace Yincpp
             }
         }
     }
+
+    static long long powerInt(int base, int head)
+    {
+        long long result = 1;
+        for (int i = 0; i < head; ++i)
+        {
+            result *= base;
+        }
+        return result;
+    }
+
+    static long long  NumbertOfD(const char *strN, int digit)
+    {
+        if (!strN || *strN < '0' || *strN > '9' || *strN == '\0')
+        {
+            return 0;
+        }
+
+        int length = strlen(strN);
+        long long numberMax;
+        int first = strN[0] - '0';
+        if (first < digit)
+        {
+            numberMax = 0;
+        }
+        else if (first == digit)
+        {
+            numberMax = atol(strN + 1) + 1;
+        }
+        else
+        {
+            numberMax = powerInt(10, length - 1);
+        }
+
+        // XXX(X+1) -> 1XXXX, 1XXX(X+1) -> 2XXXX 
+        long long numberBig = first * (length - 1) * powerInt(10, length - 2);
+        long long numberSmall = NumbertOfD(strN + 1, digit);
+
+        return numberMax + numberBig + numberSmall;
+    }
+
+    int numberOfDigitRecur(long long n, int digit)
+    {
+        if (n <= 0 || digit < 0 || digit > 9)
+        {
+            return 0;
+        }
+
+        char strN[50];
+        sprintf_s(strN, "%d", n);
+
+        return NumbertOfD(strN, digit);
+    }
+
+    
+
+
+
+
+
 }
