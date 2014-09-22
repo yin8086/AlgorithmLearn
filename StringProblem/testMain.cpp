@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <string>
 #include <vector>
@@ -34,10 +35,33 @@ void testNumOfDigit()
     long long nod = Yincpp::numberOfDigitRecur(endNum, digit);
     std::cout << "1~" << endNum << " have [" << nod << "] " << digit << "s." << std::endl;
 }
+
+void testRotate()
+{
+    
+    char testStr[100];
+    while (true)
+    {
+        scanf("%s", testStr);
+        if (std::strcmp(testStr, "-1") == 0)
+        {
+            break;
+        }
+
+        int k = 2;
+        Yincpp::strROR(testStr, k);
+        std::cout << "ROR " << k << " Bits: " << testStr << std::endl;
+        
+        Yincpp::strROL(testStr, k);
+        std::cout << "ROR " << k << " Bits: " << testStr << std::endl;
+    }
+    
+}
 int main()
 {
     //testStr();
-    testNumOfDigit();
+    //testNumOfDigit();
+    testRotate();
     system("pause");
 }
 

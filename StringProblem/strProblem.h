@@ -179,8 +179,73 @@ namespace Yincpp
         return NumbertOfD(strN, digit);
     }
 
-    
+    //@param string: [pStart, pEnd]
+    static void reverseStr(char *pStart, char *pEnd)
+    {
+        if (!pStart || !pEnd)
+        {
+            return;
+        }
 
+        while (pStart < pEnd)
+        {
+            char tmpC = *pEnd;
+            *pEnd = *pStart;
+            *pStart = tmpC;
+
+            pStart++; pEnd--;
+        }
+    }
+
+    char* strROR(char *pData, int k)
+    {
+        if (!pData || k < 0)
+        {
+            return pData;
+        }
+
+        
+        char *pStart = pData, *pEnd = pData;
+        
+        while (*pEnd != '\0')
+        {
+            pEnd++;
+        }
+        size_t strLen = pEnd - pStart;
+        pEnd--;
+
+        k = k % strLen;
+
+        reverseStr(pStart, pStart + strLen - k - 1);
+        reverseStr(pStart + strLen - k, pEnd);
+        reverseStr(pStart, pEnd);
+        return pData;
+    }
+    
+    char* strROL(char *pData, int k)
+    {
+        if (!pData || k < 0)
+        {
+            return pData;
+        }
+
+
+        char *pStart = pData, *pEnd = pData;
+
+        while (*pEnd != '\0')
+        {
+            pEnd++;
+        }
+        size_t strLen = pEnd - pStart;
+        pEnd--;
+
+        k = k % strLen;
+
+        reverseStr(pStart, pStart + k - 1);
+        reverseStr(pStart + k, pEnd);
+        reverseStr(pStart, pEnd);
+        return pData;
+    }
 
 
 

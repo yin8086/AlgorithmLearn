@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShellSort", "ShellSort\ShellSort.vcxproj", "{D0FF469F-E443-4FD7-9ECA-932742FF0087}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChainInsert", "ChainInsert\ChainInsert.vcxproj", "{F54BD4A3-B510-44CD-AF82-112605788A02}"
@@ -56,6 +58,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PatternMatch", "PatternMatch\PatternMatch.vcxproj", "{A5FCFCE5-41ED-43C7-8155-EB94A8B5B23D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StringProblem", "StringProblem\StringProblem.vcxproj", "{5E8811E5-D234-4734-95C3-C7F347B0C464}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JosephuseCircle", "JosephuseCircle\JosephuseCircle.vcxproj", "{E021E83A-11E8-4DDC-BF88-D088EA197ED8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppTips", "CppTips\CppTips.vcxproj", "{5BDD8EDC-288D-4347-BC3E-4827130E665B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -175,6 +181,14 @@ Global
 		{5E8811E5-D234-4734-95C3-C7F347B0C464}.Debug|Win32.Build.0 = Debug|Win32
 		{5E8811E5-D234-4734-95C3-C7F347B0C464}.Release|Win32.ActiveCfg = Release|Win32
 		{5E8811E5-D234-4734-95C3-C7F347B0C464}.Release|Win32.Build.0 = Release|Win32
+		{E021E83A-11E8-4DDC-BF88-D088EA197ED8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E021E83A-11E8-4DDC-BF88-D088EA197ED8}.Debug|Win32.Build.0 = Debug|Win32
+		{E021E83A-11E8-4DDC-BF88-D088EA197ED8}.Release|Win32.ActiveCfg = Release|Win32
+		{E021E83A-11E8-4DDC-BF88-D088EA197ED8}.Release|Win32.Build.0 = Release|Win32
+		{5BDD8EDC-288D-4347-BC3E-4827130E665B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5BDD8EDC-288D-4347-BC3E-4827130E665B}.Debug|Win32.Build.0 = Debug|Win32
+		{5BDD8EDC-288D-4347-BC3E-4827130E665B}.Release|Win32.ActiveCfg = Release|Win32
+		{5BDD8EDC-288D-4347-BC3E-4827130E665B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
