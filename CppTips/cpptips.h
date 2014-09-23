@@ -21,4 +21,20 @@ namespace Yincpp
         std::cout << "Int: [!-5]=" <<  ival5 << " [!!-5]=" << ival6 << std::endl;
 
     }
+
+    template<class T>
+    void myRandomShuffle(T *seq, int n)
+    {
+        if (!seq || n < 1)
+        {
+            return;
+        }
+
+        std::default_random_engine eng(std::time(0));
+        for (int i = 0; i < n; ++i)
+        {
+            std::uniform_int_distribution<> ue(i, n - 1);
+            std::swap(seq[i], seq[ue(eng)]);
+        }
+    }
 }
