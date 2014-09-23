@@ -61,7 +61,9 @@ int main()
 {
     //testStr();
     //testNumOfDigit();
-    testRotate();
+    //testRotate();
+    char *tmpStr = "1234";
+    Yincpp::allPermutation(tmpStr, strlen(tmpStr));
     system("pause");
 }
 

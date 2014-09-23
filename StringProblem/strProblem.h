@@ -247,6 +247,49 @@ namespace Yincpp
         return pData;
     }
 
+    bool myNextPermutation(char * pStr, int n)
+    {
+        if (!pStr || n < 2)
+        {
+            return false;
+        }
+        int i, j;
+        // 1.find pStr[i], last element pStr[i] < pStr[i+1]
+        for (i = n - 2; i >= 0 && pStr[i] >= pStr[i + 1]; i--);
+        if (i < 0)
+        {
+            return false;
+        }
+        // 2.find a[j], last element after index i, where pStr[j] > pStr[i]
+        for (j = n - 1; j > i && pStr[j] <= pStr[i]; j--);
+        // 3.swap pStr[i],pStr[j]
+        std::swap(pStr[i], pStr[j]);
+        // 4.reverse pStr[i+1, n-1]
+        std::reverse(pStr + i + 1, pStr + n);
+        return true;
+    }
+
+    void allPermutation(char *pStr, int n)
+    {
+        if (!pStr || n < 1)
+        {
+            return;
+        }
+        int num = 0;
+        char *tmpStr = new char[n + 1];
+        strcpy(tmpStr, pStr);
+        tmpStr[n] = '\0';
+        std::cout << "All Permutation: " << std::endl;
+        do 
+        {
+            num++;
+            std::cout << tmpStr << std::endl;
+        } while (myNextPermutation(tmpStr, n));
+        std::cout << "Count: " << num << std::endl;
+        delete[] tmpStr;
+    }
+
+    
 
 
 
