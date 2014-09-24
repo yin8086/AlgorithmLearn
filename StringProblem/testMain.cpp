@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <stack>
+#include <memory>
 #include "strProblem.h"
 
 
@@ -62,8 +63,9 @@ int main()
     //testStr();
     //testNumOfDigit();
     //testRotate();
-    char *tmpStr = "1234";
-    Yincpp::allPermutation(tmpStr, strlen(tmpStr));
+    char *tmpStr = "32145";
+    //Yincpp::allPermutation(tmpStr, strlen(tmpStr));
+    Yincpp::allCombination(tmpStr);
     system("pause");
 }
 

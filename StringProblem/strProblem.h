@@ -258,6 +258,7 @@ namespace Yincpp
         for (i = n - 2; i >= 0 && pStr[i] >= pStr[i + 1]; i--);
         if (i < 0)
         {
+            std::reverse(pStr, pStr + n);
             return false;
         }
         // 2.find a[j], last element after index i, where pStr[j] > pStr[i]
@@ -269,26 +270,89 @@ namespace Yincpp
         return true;
     }
 
-    void allPermutation(char *pStr, int n)
+    bool myPrevPermutation(char *pStr, int n)
+    {
+        if (!pStr || n < 2)
+        {
+            return false;
+        }
+
+        int i, j;
+        // 1. find pStr[i], last element that pStr[i] > pStr[i + 1]
+        for (i = n - 2; i >= 0 && pStr[i] <= pStr[i + 1]; --i);
+        if (i < 0)
+        {
+            std::reverse(pStr, pStr + n);
+            return false;
+        }
+        // 2. find pStr[j], last element after index i where pStr[j] < pStr[i]
+        for (j = n - 1; j > i && pStr[j] >= pStr[i]; --j);
+        // 3. swap pStr[i], pStr[j]
+        std::swap(pStr[i], pStr[j]);
+        // 4. reverse pStr[i+1...n-1]
+        std::reverse(pStr + i + 1, pStr + n);
+    }
+
+    void allPermutation(const char *pStr, int n, bool asc = true)
     {
         if (!pStr || n < 1)
         {
             return;
         }
         int num = 0;
-        char *tmpStr = new char[n + 1];
-        strcpy(tmpStr, pStr);
+        // copy strings for modify
+        std::unique_ptr<char[]> tmpStr(new char[n + 1]);
+        strcpy(tmpStr.get(), pStr);
         tmpStr[n] = '\0';
+
         std::cout << "All Permutation: " << std::endl;
         do 
         {
             num++;
-            std::cout << tmpStr << std::endl;
-        } while (myNextPermutation(tmpStr, n));
+            std::cout << tmpStr.get() << std::endl;
+            //myNextPermutation(tmpStr.get(), n);
+            myPrevPermutation(tmpStr.get(), n);
+        } while (strcmp(tmpStr.get(), pStr) != 0);
         std::cout << "Count: " << num << std::endl;
-        delete[] tmpStr;
     }
 
+    void combination(const std::string &prefix, const std::string &src, int m, int &count)
+    {
+        if (m == src.size())
+        {
+            std::cout << prefix + src << std::endl;
+            count++;
+            return;
+        }
+        else if (m == 0)
+        {
+            if (prefix != "")
+            {
+                std::cout << prefix << std::endl;
+                count++;
+            }
+        }
+        else
+        {
+            combination(prefix + src.substr(0, 1), src.substr(1), m-1, count);
+            combination(prefix, src.substr(1), m, count);
+        }
+    }
+
+    void allCombination(const char *pStr)
+    {
+        if (!pStr)
+        {
+            return;
+        }
+        std::string curStr(pStr);
+        int count = 0;
+        for (int i = 1; i <= curStr.length(); ++i)
+        {
+            combination("", curStr, i, count);
+        }
+        std::cout << "count: " << count << std::endl;
+    }
     
 
 
