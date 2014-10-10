@@ -63,7 +63,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JosephuseCircle", "Josephus
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppTips", "CppTips\CppTips.vcxproj", "{5BDD8EDC-288D-4347-BC3E-4827130E665B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrawLineYin", "..\DrawLineYin\DrawLineYin.vcxproj", "{D5539104-638B-4752-84FF-817AD42F8EB5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrawLineYin", "DrawLineYin\DrawLineYin.vcxproj", "{D5539104-638B-4752-84FF-817AD42F8EB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

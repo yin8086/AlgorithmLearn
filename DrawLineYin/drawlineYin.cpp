@@ -9,7 +9,7 @@
 #include <tuple>
 #include <cmath>
 
-#define SUPPORT_TEXTURE 1
+#define SUPPORT_TEXTURE 0
 
 const double MIN_LEN = 20.f;
 const double MIN_FACTOR = .80f;
